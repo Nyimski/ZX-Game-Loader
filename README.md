@@ -16,7 +16,7 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 
 - Windows 10 (64-bit)
 - Python (embedded in the project)
-- tzxplay.py (modified version from tzxtool by shred)
+- tzxplay.py (modified version from tzxtools by shred)
 
 ## Installation
 
