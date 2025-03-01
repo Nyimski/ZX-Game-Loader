@@ -38,7 +38,7 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 
 ## Acknowledgements
 
-This project uses a modified version of `tzxplay.py` from the `tzxtools` authored by [shred](https://github.com/shred).
+This project uses a modified version of `tzxplay.py` from `tzxtools` authored by [shred](https://github.com/shred).
 
 ## License
 
