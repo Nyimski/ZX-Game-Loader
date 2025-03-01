@@ -1,0 +1,5 @@
+setup.py
+tzxlib.egg-info/PKG-INFO
+tzxlib.egg-info/SOURCES.txt
+tzxlib.egg-info/dependency_links.txt
+tzxlib.egg-info/top_level.txt

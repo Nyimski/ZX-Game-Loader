@@ -1,0 +1,10 @@
+python313.zip
+.
+Lib\site-packages
+import site
+sys.path.append(sys.path.append(r'C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\python\Lib\site-packages\numpy')
+)
+
+
+# Uncomment to run site.main() automatically
+#import site

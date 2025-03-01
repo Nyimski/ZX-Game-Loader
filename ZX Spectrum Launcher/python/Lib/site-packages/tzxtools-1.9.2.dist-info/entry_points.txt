@@ -1,0 +1,10 @@
+[console_scripts]
+tzxcat = tzxtools.tzxcat:main
+tzxcleanup = tzxtools.tzxcleanup:main
+tzxcut = tzxtools.tzxcut:main
+tzxls = tzxtools.tzxls:main
+tzxmerge = tzxtools.tzxmerge:main
+tzxplay = tzxtools.tzxplay:main
+tzxsplit = tzxtools.tzxsplit:main
+tzxtap = tzxtools.tzxtap:main
+tzxwav = tzxtools.tzxwav:main
