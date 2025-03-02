@@ -1,0 +1,23 @@
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\ZX Spectrum Launcher.exe
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\ZX Spectrum Launcher.dll.config
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\ZX Spectrum Launcher.deps.json
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\ZX Spectrum Launcher.runtimeconfig.json
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\ZX Spectrum Launcher.dll
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\ZX Spectrum Launcher.pdb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX_Spectrum_Launcher.Form1.resources
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX_Spectrum_Launcher.Resources.resources
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.vbproj.GenerateResource.cache
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.AssemblyInfoInputs.cache
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.AssemblyInfo.vb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.vbproj.CoreCompileInputs.cache
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.dll
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\refint\ZX Spectrum Launcher.dll
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.pdb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX Spectrum Launcher.genruntimeconfig.cache
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ref\ZX Spectrum Launcher.dll
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\tzxplay.py
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\DeleteTempFiles.bat
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\Form1.vb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\Form2.vb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\obj\Release\net8.0-windows\ZX_Spectrum_Launcher.SettingsForm.resources

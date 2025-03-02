@@ -1,0 +1,10 @@
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\ZX Spectrum Launcher.exe
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\DeleteTempFiles.bat
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\tzxplay.py
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\Form1.vb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\Form2.vb
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\ZX Spectrum Launcher.dll
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\ZX Spectrum Launcher.deps.json
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\ZX Spectrum Launcher.runtimeconfig.json
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\ZX Spectrum Launcher.dll.config
+C:\Users\xnyim\source\repos\ZX Spectrum Launcher\ZX Spectrum Launcher\bin\Release\net8.0-windows\publish\ZX Spectrum Launcher.pdb
