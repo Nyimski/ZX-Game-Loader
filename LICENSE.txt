@@ -1,0 +1,68 @@
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2025 Mark 'Nyimski' Steele
+Everyone is permitted to copy and distribute verbatim copies
+of this license document, but changing it is not allowed.
+
+  0. Definitions.
+    This License refers to version 3 of the GNU General Public License.
+
+  1. Applicability of This License.
+    This License applies to any program or other work which contains a
+    notice placed by the copyright holder saying it may be distributed
+    under the terms of this License. The "Program", below, refers to any
+    such program or work, and a "work based on the Program" means either
+    the Program or any derivative work under copyright law: that is to say,
+    a work containing the Program or a portion of it, either verbatim or
+    with modifications.
+
+  2. Verbatim copying of the Program.
+    You may copy, distribute, and modify the Program under the terms of
+    this License, provided that you keep intact all copyright notices,
+    disclaimers of warranty, and the terms of this License. You may
+    distribute copies of the Program under the terms of this License, and
+    you may charge a fee for the distribution of copies.
+
+  3. Modifications to the Program.
+    You may modify the Program or any part of it, provided that the
+    modifications are marked and documented. You may distribute copies
+    of the Program, including your modifications, under the terms of this
+    License, as long as you retain the copyright notices of the original
+    work and include appropriate notices of your changes.
+
+  4. Patents.
+    If you convey a copy of the Program or a work based on the Program,
+    you may not impose any further restrictions on the recipients' exercise
+    of the rights granted by this License. You may not use the Program in
+    any way that infringes the rights of others under patent law.
+
+  5. No warranty.
+    The Program is distributed with the hope that it will be useful, but
+    WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+    GNU General Public License for more details.
+
+  6. Termination.
+    If you violate the terms of this License, your rights under it are
+    automatically terminated. However, if you stop violating the terms and
+    correct your violation within 30 days, your rights will be restored.
+
+  7. Distribution of source code.
+    You must provide access to the source code of the Program, either by
+    including it in the distribution or providing a written offer to provide
+    it.
+
+  8. License Compatibility.
+    If you modify the Program and distribute your modifications, you must
+    license the modified program under the same GPLv3 terms. You must also
+    provide access to the modified source code.
+
+  9. Acceptance.
+    By using, modifying, or distributing the Program, you accept the terms
+    of this License.
+
+  10. Further information.
+    You should have received a copy of the GNU General Public License along
+    with the Program. If not, see <http://www.gnu.org/licenses/>.
+
