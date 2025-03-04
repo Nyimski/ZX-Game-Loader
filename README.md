@@ -26,7 +26,7 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 1. Run the application.
 2. Click "Settings" and add paths to your Games, Instruction Manuals, and Artwork.
 3. Select a game from the list.
-4. Click "Load Game" to start the game playback.
+l4. Click "Play" to start the game playback.
 5. Use the "Pause" button to pause the game and the "Rewind" button to rewind the game playback.
 
 ## Acknowledgements
