@@ -13,13 +13,11 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 
 ## Requirements
 - **Windows 10** (64-bit) or **Windows 11** (64-bit)
-- **Python** (embedded in the project)
 
 ## Installation
 
-1. Clone the repository or download the Zip.
-2. Ensure that the required Python modules are installed in the embedded Python environment (they are included within the project).
-3. Run the application by executing the main Python script or the packaged executable (depending on your setup).
+1. Download the latest release.
+2. Extract the zip file to a folder of your choice.
 
 ## Usage
 
