@@ -12,6 +12,9 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 - **Fast Forward**: (Planned) Allows fast-forwarding the game playback.
 - **Record**: (Planned) Allows recording and saving game progress.
 
+## Recent Changes
+For details, see the [CHANGELOG.md](CHANGELOG.md) file.
+
 ## Requirements
 
 - Windows 10 (64-bit)
