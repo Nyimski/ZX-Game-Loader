@@ -10,6 +10,8 @@ Public Class Form1
     Dim ManualFolder As String = Path.Combine(Application.StartupPath, "Manuals")
     Private ReadOnly _settingsFilePath As String = Path.Combine(Application.StartupPath, "settings.txt")
     Private _lastSelectedGame As String = String.Empty
+    Private _allGames As New List(Of String)() ' Stores the complete game list
+    Private _currentSearchTerm As String = ""   ' Tracks the current search
 
     ' Tape loading variables
     Private tzxPlayProcess As Process = Nothing
@@ -73,18 +75,18 @@ Public Class Form1
 
     Private Sub LoadGames()
         If Directory.Exists(GameFolder) Then
-            ListBox1.Items.Clear()
-            Dim games As New List(Of String)
+            ' Clear and reload the master list
+            _allGames.Clear()
 
             For Each file In Directory.GetFiles(GameFolder, "*.tzx", SearchOption.AllDirectories).
-                                    Concat(Directory.GetFiles(GameFolder, "*.tap", SearchOption.AllDirectories))
-                games.Add(Path.GetFileNameWithoutExtension(file))
+                                Concat(Directory.GetFiles(GameFolder, "*.tap", SearchOption.AllDirectories))
+                _allGames.Add(Path.GetFileNameWithoutExtension(file))
             Next
 
-            games.Sort()
-            ListBox1.Items.AddRange(games.ToArray())
+            _allGames.Sort()
+            ApplyGameFilter() ' Apply any existing search filter
 
-            ' Restore last selected game if enabled and exists
+            ' Restore last selected game if enabled
             If Not String.IsNullOrEmpty(_lastSelectedGame) Then
                 Dim index = ListBox1.Items.IndexOf(_lastSelectedGame)
                 If index >= 0 Then
@@ -94,13 +96,49 @@ Public Class Form1
                 End If
             End If
 
-            ' Default to first item
             If ListBox1.Items.Count > 0 Then
                 ListBox1.SelectedIndex = 0
                 ListBox1_SelectedIndexChanged(ListBox1, EventArgs.Empty)
             End If
         Else
             MessageBox.Show("Game folder not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
+
+    Private Sub ApplyGameFilter()
+        ListBox1.BeginUpdate() ' Prevents flickering
+        ListBox1.Items.Clear()
+
+        If String.IsNullOrWhiteSpace(_currentSearchTerm) Then
+            ' Show all games when search is empty
+            ListBox1.Items.AddRange(_allGames.ToArray())
+        Else
+            ' Case-insensitive search with normalized whitespace
+            Dim searchTerms = _currentSearchTerm.ToLower().Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
+
+            ListBox1.Items.AddRange(
+            _allGames.Where(Function(game)
+                                Dim lowerGame = game.ToLower()
+                                Return searchTerms.All(Function(term) lowerGame.Contains(term))
+                            End Function).ToArray())
+        End If
+
+        ' Auto-select first item if available
+        If ListBox1.Items.Count > 0 Then
+            ListBox1.SelectedIndex = 0
+        End If
+
+        ListBox1.EndUpdate()
+    End Sub
+
+    Private Sub SearchBox_TextChanged(sender As Object, e As EventArgs) Handles SearchBox.TextChanged
+        ' Normalize search term (trim + convert to lowercase)
+        Dim newSearchTerm = SearchBox.Text.Trim().ToLower()
+
+        ' Only update if search term actually changed
+        If newSearchTerm <> _currentSearchTerm Then
+            _currentSearchTerm = newSearchTerm
+            ApplyGameFilter()
         End If
     End Sub
 

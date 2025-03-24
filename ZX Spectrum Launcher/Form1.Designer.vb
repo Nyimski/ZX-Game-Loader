@@ -37,6 +37,7 @@ Partial Class Form1
         LblCurrentGame = New Label()
         MenuStrip1 = New MenuStrip()
         Label1 = New Label()
+        SearchBox = New TextBox()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -44,9 +45,9 @@ Partial Class Form1
         ' 
         ListBox1.FormattingEnabled = True
         ListBox1.ItemHeight = 15
-        ListBox1.Location = New Point(0, 27)
+        ListBox1.Location = New Point(0, 57)
         ListBox1.Name = "ListBox1"
-        ListBox1.Size = New Size(620, 529)
+        ListBox1.Size = New Size(620, 499)
         ListBox1.TabIndex = 0
         ' 
         ' PictureBox1
@@ -153,11 +154,20 @@ Partial Class Form1
         Label1.TabIndex = 14
         Label1.Text = "Current Game:"
         ' 
+        ' SearchBox
+        ' 
+        SearchBox.Location = New Point(2, 27)
+        SearchBox.Name = "SearchBox"
+        SearchBox.PlaceholderText = "Search Games...."
+        SearchBox.Size = New Size(618, 23)
+        SearchBox.TabIndex = 15
+        ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(988, 655)
+        Controls.Add(SearchBox)
         Controls.Add(Label1)
         Controls.Add(BtnPause)
         Controls.Add(BtnLoadGame)
@@ -194,5 +204,6 @@ Partial Class Form1
     Friend WithEvents LblCurrentGame As Label
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents Label1 As Label
+    Friend WithEvents SearchBox As TextBox
 
 End Class
