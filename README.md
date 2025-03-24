@@ -10,6 +10,7 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 - **Pause**: Allows pausing the game playback.
 - **Rewind**: Allows rewinding the game playback.
 - **Instant Search**: Filter games by typing in the search box - no button needed!
+- **Remember Last Game**: When selected returns to last game in list when app is reloaded.
 - **Fast Forward**: (Planned) Allows fast-forwarding the game playback.
 - **Record**: (Planned) Allows recording and saving game progress.
 
