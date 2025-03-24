@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         ListBox1 = New ListBox()
         PictureBox1 = New PictureBox()
         RichTextBox1 = New RichTextBox()
@@ -170,6 +171,7 @@ Partial Class Form1
         Controls.Add(PictureBox1)
         Controls.Add(ListBox1)
         Controls.Add(MenuStrip1)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MainMenuStrip = MenuStrip1
         Name = "Form1"
         Text = "Form1"
