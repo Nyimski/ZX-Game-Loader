@@ -1,6 +1,6 @@
-# ZX Spectrum Game Loader
+# ZX Game Loader
 
-ZX Spectrum Game Loader is a graphical user interface (GUI) application designed to load ZX Spectrum games onto original hardware. The application features a game list, screenshots, and instruction manuals, all displayed within the GUI. It also includes added features such as pause and rewind, with plans to add fast forward and record features in the future.
+ZX Game Loader is a graphical user interface (GUI) application designed to load ZX Spectrum games onto original hardware. The application features a game list, screenshots, and instruction manuals, all displayed within the GUI. It also includes added features such as pause and rewind, with plans to add fast forward and record features in the future.
 
 ## Features
 - **Game List**: Displays a list of available ZX Spectrum games.
@@ -23,7 +23,7 @@ ZX Spectrum Game Loader is a graphical user interface (GUI) application designed
 
 ## Usage
 
-1. Run the application (ZX Spectrum Launcher.exe).
+1. Run the application (ZX Launcher.exe).
 2. Click "Settings" and add paths to your Games, Instruction Manuals, and Artwork.
 3. Select a game from the list.
 4. Click "Load Game" to start the game playback.
