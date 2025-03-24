@@ -4,27 +4,43 @@ Imports System.Text
 Imports System.Drawing
 
 Public Class Form1
+    ' Folder paths and settings
     Dim GameFolder As String = Path.Combine(Application.StartupPath, "Games\Retail")
     Dim ImageFolder As String = Path.Combine(Application.StartupPath, "Images")
     Dim ManualFolder As String = Path.Combine(Application.StartupPath, "Manuals")
+    Private ReadOnly _settingsFilePath As String = Path.Combine(Application.StartupPath, "settings.txt")
+    Private _lastSelectedGame As String = String.Empty
+
+    ' Tape loading variables
     Private tzxPlayProcess As Process = Nothing
     Private isPaused As Boolean = False
     Private controlFilePath As String = Path.Combine(Path.GetTempPath(), "tzx_control.txt")
     Private totalBlocksFilePath As String = Path.Combine(Path.GetTempPath(), "total_blocks.txt")
     Private tapeCounter As Integer = 0
     Private tapeCounterTimer As New Timer()
-    Private totalBlocks As Integer = 0 ' Stores the total number of blocks
-    Private zeroedBlock As Integer = 0 ' Stores the block number when Set 000 is pressed
+    Private totalBlocks As Integer = 0
+    Private zeroedBlock As Integer = 0
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.Text = "ZX Spectrum Game Loader"
-        InitializeMenuStrip() ' Initialize the menu bar
-        LoadSettings() ' Load folder paths from settings.txt
+        InitializeMenuStrip()
+
+        ' Load settings and last game
+        LoadSettings()
+
+        ' Check if we should remember last game
+        If File.Exists(_settingsFilePath) Then
+            Dim lines() As String = File.ReadAllLines(_settingsFilePath)
+            If lines.Length >= 5 AndAlso Boolean.Parse(lines(3)) Then
+                _lastSelectedGame = lines(4)
+            End If
+        End If
+
         LoadGames()
 
-        ' Set up the tape counter timer
-        tapeCounterTimer.Interval = 1000 ' Update every second
+        ' Set up tape counter
+        tapeCounterTimer.Interval = 1000
         AddHandler tapeCounterTimer.Tick, AddressOf UpdateTapeCounter
     End Sub
 
@@ -40,19 +56,17 @@ Public Class Form1
     Private Sub OpenSettingsForm(sender As Object, e As EventArgs)
         Dim settingsForm As New SettingsForm()
         settingsForm.ShowDialog()
-        ' Reload games and other resources after settings are updated
         LoadSettings()
-        LoadGames()
+        LoadGames() ' Refresh games list if paths changed
     End Sub
 
     Private Sub LoadSettings()
-        Dim settingsFilePath As String = Path.Combine(Application.StartupPath, "settings.txt")
-        If File.Exists(settingsFilePath) Then
-            Dim lines() As String = File.ReadAllLines(settingsFilePath)
+        If File.Exists(_settingsFilePath) Then
+            Dim lines() As String = File.ReadAllLines(_settingsFilePath)
             If lines.Length >= 3 Then
-                GameFolder = Path.Combine(Application.StartupPath, lines(0))
-                ImageFolder = Path.Combine(Application.StartupPath, lines(1))
-                ManualFolder = Path.Combine(Application.StartupPath, lines(2))
+                GameFolder = If(Path.IsPathRooted(lines(0)), lines(0), Path.Combine(Application.StartupPath, lines(0)))
+                ImageFolder = If(Path.IsPathRooted(lines(1)), lines(1), Path.Combine(Application.StartupPath, lines(1)))
+                ManualFolder = If(Path.IsPathRooted(lines(2)), lines(2), Path.Combine(Application.StartupPath, lines(2)))
             End If
         End If
     End Sub
@@ -62,13 +76,25 @@ Public Class Form1
             ListBox1.Items.Clear()
             Dim games As New List(Of String)
 
-            For Each file In Directory.GetFiles(GameFolder, "*.tzx", SearchOption.AllDirectories).Concat(Directory.GetFiles(GameFolder, "*.tap", SearchOption.AllDirectories))
+            For Each file In Directory.GetFiles(GameFolder, "*.tzx", SearchOption.AllDirectories).
+                                    Concat(Directory.GetFiles(GameFolder, "*.tap", SearchOption.AllDirectories))
                 games.Add(Path.GetFileNameWithoutExtension(file))
             Next
 
             games.Sort()
             ListBox1.Items.AddRange(games.ToArray())
 
+            ' Restore last selected game if enabled and exists
+            If Not String.IsNullOrEmpty(_lastSelectedGame) Then
+                Dim index = ListBox1.Items.IndexOf(_lastSelectedGame)
+                If index >= 0 Then
+                    ListBox1.SelectedIndex = index
+                    ListBox1_SelectedIndexChanged(ListBox1, EventArgs.Empty)
+                    Return
+                End If
+            End If
+
+            ' Default to first item
             If ListBox1.Items.Count > 0 Then
                 ListBox1.SelectedIndex = 0
                 ListBox1_SelectedIndexChanged(ListBox1, EventArgs.Empty)
@@ -76,6 +102,27 @@ Public Class Form1
         Else
             MessageBox.Show("Game folder not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
+    End Sub
+
+    Private Sub SaveLastGame()
+        If Not File.Exists(_settingsFilePath) Then Return
+
+        Dim lines() As String = File.ReadAllLines(_settingsFilePath)
+        If lines.Length >= 4 AndAlso Boolean.Parse(lines(3)) Then
+            ' Update or add last game
+            Dim currentGame = If(ListBox1.SelectedItem?.ToString(), "")
+            If lines.Length >= 5 Then
+                lines(4) = currentGame
+            Else
+                ReDim Preserve lines(4)
+                lines(4) = currentGame
+            End If
+            File.WriteAllLines(_settingsFilePath, lines)
+        End If
+    End Sub
+
+    Private Sub Form1_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        SaveLastGame()
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged

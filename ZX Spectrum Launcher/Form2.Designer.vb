@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class SettingsForm
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class SettingsForm
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         LblGamesFolder = New Label()
         LblScreenshotsFolder = New Label()
@@ -33,6 +33,7 @@ Partial Class SettingsForm
         BtnBrowseScreenshots = New Button()
         BtnSave = New Button()
         Label1 = New Label()
+        ChkRememberLastGame = New CheckBox()
         SuspendLayout()
         ' 
         ' LblGamesFolder
@@ -128,11 +129,23 @@ Partial Class SettingsForm
         Label1.TabIndex = 10
         Label1.Text = "Select folders containing your Games, Instruction Manuals and Screenshots and then click 'Save Settings'"
         ' 
+        ' ChkRememberLastGame
+        ' 
+        ChkRememberLastGame.AutoSize = True
+        ChkRememberLastGame.CheckAlign = ContentAlignment.MiddleRight
+        ChkRememberLastGame.Location = New Point(23, 197)
+        ChkRememberLastGame.Name = "ChkRememberLastGame"
+        ChkRememberLastGame.Size = New Size(142, 19)
+        ChkRememberLastGame.TabIndex = 11
+        ChkRememberLastGame.Text = "Remember Last Game"
+        ChkRememberLastGame.UseVisualStyleBackColor = True
+        ' 
         ' SettingsForm
         ' 
-        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleDimensions = New SizeF(7.0F, 15.0F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(659, 239)
+        Controls.Add(ChkRememberLastGame)
         Controls.Add(Label1)
         Controls.Add(BtnSave)
         Controls.Add(BtnBrowseScreenshots)
@@ -145,7 +158,7 @@ Partial Class SettingsForm
         Controls.Add(LblScreenshotsFolder)
         Controls.Add(LblGamesFolder)
         Name = "SettingsForm"
-        Text = "Form2"
+        Text = "Settings"
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -161,4 +174,5 @@ Partial Class SettingsForm
     Friend WithEvents BtnBrowseScreenshots As Button
     Friend WithEvents BtnSave As Button
     Friend WithEvents Label1 As Label
+    Friend WithEvents ChkRememberLastGame As CheckBox
 End Class

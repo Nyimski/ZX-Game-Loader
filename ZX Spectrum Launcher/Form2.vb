@@ -1,17 +1,18 @@
 ﻿Imports System.IO
 
 Public Class SettingsForm
-    Private settingsFilePath As String = Path.Combine(Application.StartupPath, "settings.txt")
+    Private ReadOnly _settingsFilePath As String = Path.Combine(Application.StartupPath, "settings.txt")
 
     Private Sub SettingsForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.Text = "Settings" ' Set the form title
-        ' Load saved folder paths
-        If File.Exists(settingsFilePath) Then
-            Dim lines() As String = File.ReadAllLines(settingsFilePath)
-            If lines.Length >= 3 Then
+        Me.Text = "Settings"
+        Me.Icon = Form1.Icon
+        If File.Exists(_settingsFilePath) Then
+            Dim lines() As String = File.ReadAllLines(_settingsFilePath)
+            If lines.Length >= 4 Then
                 TxtGamesFolder.Text = lines(0)
                 TxtScreenshotsFolder.Text = lines(1)
                 TxtManualsFolder.Text = lines(2)
+                Boolean.TryParse(lines(3), ChkRememberLastGame.Checked)
             End If
         End If
     End Sub
@@ -41,13 +42,13 @@ Public Class SettingsForm
     End Sub
 
     Private Sub BtnSave_Click(sender As Object, e As EventArgs) Handles BtnSave.Click
-        ' Save folder paths to settings file
         Dim lines() As String = {
             TxtGamesFolder.Text,
             TxtScreenshotsFolder.Text,
-            TxtManualsFolder.Text
+            TxtManualsFolder.Text,
+            ChkRememberLastGame.Checked.ToString()
         }
-        File.WriteAllLines(settingsFilePath, lines)
+        File.WriteAllLines(_settingsFilePath, lines)
         MessageBox.Show("Settings saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
     End Sub
