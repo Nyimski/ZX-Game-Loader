@@ -18,6 +18,7 @@ Public Class Form1
     Private isPaused As Boolean = False
     Private controlFilePath As String = Path.Combine(Path.GetTempPath(), "tzx_control.txt")
     Private totalBlocksFilePath As String = Path.Combine(Path.GetTempPath(), "total_blocks.txt")
+    Private nextBlockFilePath As String = Path.Combine(Path.GetTempPath(), "next_block.txt") ' Added for FFWD
     Private tapeCounter As Integer = 0
     Private tapeCounterTimer As New Timer()
     Private totalBlocks As Integer = 0
@@ -214,6 +215,7 @@ Public Class Form1
                                         "set ""TempPath=%LocalAppData%\Temp""" & Environment.NewLine &
                                         "del ""%TempPath%\current_block.txt"" /F /Q" & Environment.NewLine &
                                         "del ""%TempPath%\total_blocks.txt"" /F /Q" & Environment.NewLine &
+                                        "del ""%TempPath%\next_block.txt"" /F /Q" & Environment.NewLine & ' Added for FFWD
                                         "exit"
 
         ' Write the batch file
@@ -369,30 +371,26 @@ Public Class Form1
         LblTapeCounter.Text = $"Current Block: {currentBlock}"
     End Sub
 
-    Private Sub BtnFastForward_Click(sender As Object, e As EventArgs)
+    Private Sub BtnFastForward_Click(sender As Object, e As EventArgs) Handles BtnFastForward.Click
         If tzxPlayProcess Is Nothing OrElse tzxPlayProcess.HasExited Then
             MessageBox.Show("No game is currently playing.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
 
-        ' Get the current block
-        Dim currentBlock = GetCurrentBlock()
+        ' Get the next block from the file written by tzxplay.py
+        If File.Exists(nextBlockFilePath) Then
+            Try
+                Dim targetBlock As Integer = Integer.Parse(File.ReadAllText(nextBlockFilePath))
 
-        ' Move to the next block, but stop at the last playable block
-        If currentBlock < totalBlocks - 1 Then
-            currentBlock += 1
+                ' Send jump command to Python script
+                File.WriteAllText(controlFilePath, $"jump:{targetBlock}")
+
+                ' Immediate UI feedback
+                LblTapeCounter.Text = $"Current Block: {targetBlock}"
+            Catch ex As Exception
+                Debug.WriteLine($"Fast-forward error: {ex.Message}")
+            End Try
         End If
-
-        ' Ensure currentBlock is within bounds
-        If currentBlock >= totalBlocks Then
-            currentBlock = totalBlocks - 1 ' Stop at the last playable block
-        End If
-
-        ' Send the target block to the Python script
-        File.WriteAllText(controlFilePath, $"rewind:{currentBlock}")
-
-        ' Display the current block
-        LblTapeCounter.Text = $"Current Block: {currentBlock}"
     End Sub
 
     Private Sub BtnSetZero_Click(sender As Object, e As EventArgs) Handles BtnSetZero.Click

@@ -23,6 +23,9 @@ current_block_file = os.path.join(os.getenv("TEMP"), "current_block.txt")
 # Total blocks file path
 total_blocks_file = os.path.join(os.getenv("TEMP"), "total_blocks.txt")
 
+# Next block file path
+next_block_file = os.path.join(os.getenv("TEMP"), "next_block.txt")
+
 def get_default_audio_device():
     """Retrieve the system's default output audio device."""
     devices = sd.query_devices()
@@ -61,6 +64,8 @@ def streamAudio(tzx: TzxFile, rate=44100, stopAlways=False, stop48k=False, sine=
         os.remove(current_block_file)
     if os.path.exists(total_blocks_file):
         os.remove(total_blocks_file)
+    if os.path.exists(next_block_file):
+        os.remove(next_block_file)
 
     try:
         with open(total_blocks_file, "w") as f:
@@ -72,8 +77,10 @@ def streamAudio(tzx: TzxFile, rate=44100, stopAlways=False, stop48k=False, sine=
         try:
             with open(current_block_file, "w") as f:
                 f.write(str(block))
+            with open(next_block_file, "w") as f:
+                f.write(str(min(block + 1, len(tzx.blocks) - 1)))  # Never exceeds tape end
         except Exception as e:
-            print(f"Error writing current block: {e}")
+            print(f"Error writing block files: {e}")
 
         command = check_control_file()
         if command == "pause":
@@ -92,6 +99,14 @@ def streamAudio(tzx: TzxFile, rate=44100, stopAlways=False, stop48k=False, sine=
                 block = 0
                 currentSampleTime = 0
                 realTimeNs = 0
+                continue
+        elif command and command.startswith("jump"):
+            try:
+                block = max(0, min(int(command.split(":")[1]), len(tzx.blocks) - 1))
+                currentSampleTime = 0
+                realTimeNs = 0
+                continue
+            except ValueError:
                 continue
 
         if paused:
@@ -145,6 +160,14 @@ def streamAudio(tzx: TzxFile, rate=44100, stopAlways=False, stop48k=False, sine=
                     currentSampleTime = 0
                     realTimeNs = 0
                     break
+            elif command and command.startswith("jump"):
+                try:
+                    block = int(command.split(":")[1])
+                    currentSampleTime = 0
+                    realTimeNs = 0
+                    break
+                except ValueError:
+                    continue
 
             if paused:
                 time.sleep(0.1)
