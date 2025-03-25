@@ -38,6 +38,7 @@ Partial Class Form1
         MenuStrip1 = New MenuStrip()
         Label1 = New Label()
         SearchBox = New TextBox()
+        BtnFastForward = New Button()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
@@ -77,7 +78,7 @@ Partial Class Form1
         ' 
         ' BtnPause
         ' 
-        BtnPause.Location = New Point(255, 580)
+        BtnPause.Location = New Point(336, 580)
         BtnPause.Name = "BtnPause"
         BtnPause.Size = New Size(75, 23)
         BtnPause.TabIndex = 5
@@ -86,7 +87,7 @@ Partial Class Form1
         ' 
         ' BtnStop
         ' 
-        BtnStop.Location = New Point(174, 580)
+        BtnStop.Location = New Point(255, 580)
         BtnStop.Name = "BtnStop"
         BtnStop.Size = New Size(75, 23)
         BtnStop.TabIndex = 6
@@ -104,7 +105,7 @@ Partial Class Form1
         ' 
         ' BtnSetZero
         ' 
-        BtnSetZero.Location = New Point(336, 580)
+        BtnSetZero.Location = New Point(417, 580)
         BtnSetZero.Name = "BtnSetZero"
         BtnSetZero.Size = New Size(75, 23)
         BtnSetZero.TabIndex = 8
@@ -114,7 +115,7 @@ Partial Class Form1
         ' LblTapeCounter
         ' 
         LblTapeCounter.AutoSize = True
-        LblTapeCounter.Location = New Point(441, 584)
+        LblTapeCounter.Location = New Point(522, 584)
         LblTapeCounter.Name = "LblTapeCounter"
         LblTapeCounter.Size = New Size(82, 15)
         LblTapeCounter.TabIndex = 9
@@ -123,7 +124,7 @@ Partial Class Form1
         ' LblZeroedBlock
         ' 
         LblZeroedBlock.AutoSize = True
-        LblZeroedBlock.Location = New Point(567, 584)
+        LblZeroedBlock.Location = New Point(648, 584)
         LblZeroedBlock.Name = "LblZeroedBlock"
         LblZeroedBlock.Size = New Size(83, 15)
         LblZeroedBlock.TabIndex = 11
@@ -162,11 +163,21 @@ Partial Class Form1
         SearchBox.Size = New Size(618, 23)
         SearchBox.TabIndex = 15
         ' 
+        ' BtnFastForward
+        ' 
+        BtnFastForward.Location = New Point(174, 580)
+        BtnFastForward.Name = "BtnFastForward"
+        BtnFastForward.Size = New Size(75, 23)
+        BtnFastForward.TabIndex = 16
+        BtnFastForward.Text = "Forward"
+        BtnFastForward.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(988, 655)
+        Controls.Add(BtnFastForward)
         Controls.Add(SearchBox)
         Controls.Add(Label1)
         Controls.Add(BtnPause)
@@ -205,5 +216,6 @@ Partial Class Form1
     Friend WithEvents MenuStrip1 As MenuStrip
     Friend WithEvents Label1 As Label
     Friend WithEvents SearchBox As TextBox
+    Friend WithEvents BtnFastForward As Button
 
 End Class
