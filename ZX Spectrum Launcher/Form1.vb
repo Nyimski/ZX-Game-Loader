@@ -60,7 +60,7 @@ Public Class Form1
         Dim settingsForm As New SettingsForm()
         settingsForm.ShowDialog()
         LoadSettings()
-        LoadGames() ' Refresh games list if paths changed
+        LoadGames() ' Refresh games list if paths have changed
     End Sub
 
     Private Sub LoadSettings()
