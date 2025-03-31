@@ -1,0 +1,153 @@
+ZX Game Loader - Complete User Guide
+====================================
+
+ HOW TO USE (QUICK START)
+----------------------------
+1. SELECT A GAME:
+   - Scroll the list or type in the search box
+   - Click any game to view its screenshot/manual
+
+2. PLAY CONTROLS:
+   • PLAY    - Start playback
+   • PAUSE   - Temporarily halt
+   • STOP    - End playback
+   • REWIND  - Move back 1 block
+   • FORWARD - Jump next block
+
+3. TAPE NAVIGATION:
+   - Current Block: Shows playback position
+   - SET 000: Marks reference point (e.g., after loading screens, start of level)
+
+ SETTINGS GUIDE
+-----------------
+FOLDER PATHS:
+- Default: Uses /Games, /Images, /Manuals in app root
+- To change:
+  1. Menu → Settings
+  2. Click "Browse" next to each folder type
+  3. Select your custom folder
+
+OPTIONS:
+- "Remember Last Game": Reopens your last-played game on startup
+
+ SAVE/LOAD STATES (AUDIO)
+---------------------------
+SAVING:
+1. During gameplay, click SAVE STATE
+2. Wait for "Waiting for signal..."
+3. Play audio from Spectrum's EAR port
+4. App auto-records (default: 15s)
+
+LOADING:
+1. Click LOAD STATE
+2. Select a .wav file from the game's save folder
+
+RECOMMENDED DURATIONS:
+| Game Type          | Duration |
+|--------------------|----------|
+| Most games         | 15s      |
+| Multi-load         | 60s      |
+| (e.g., The Hobbit) |          |
+| Long saves         | 90s      |
+| (e.g., Elite)      |          |
+
+1. APPLICATION OVERVIEW
+-----------------------
+A tool for loading, playing, and managing ZX Spectrum tape games (.tzx/.tap) with:
+- Real-time tape emulation
+- Game state saving/loading via audio
+- Searchable game library
+- Screenshot and manual support
+
+2. MAIN INTERFACE CONTROLS
+-------------------------
+
+[Game List]
+- Displays all detected .tzx/.tap files
+- Click to select a game (displays screenshot/manual)
+- Use search box to filter (supports multiple terms)
+
+[Buttons]
+• LOAD    - Play selected game (starts tape emulation)
+• PAUSE   - Temporarily halt playback
+• STOP    - Completely stop playback
+• REWIND  - Move back 1 tape block
+• FORWARD    - Jump to next tape block
+• SET 000 - Mark current block for reference
+
+[Tape Status]
+- Current Block: Shows playback position
+- Reset at Block: Reference marker (set via SET 000)
+
+3. SAVE/LOAD STATES (AUDIO)
+---------------------------
+[SAVE STATE]
+1. Click during gameplay
+2. Wait for "Waiting for signal" message
+3. Play audio from Spectrum (EAR port)
+4. App will auto-detect and record (15-90 sec)
+
+[LOAD STATE]
+1. Click and select a saved .wav file
+2. Playback will simulate tape loading
+
+4. SEARCH FUNCTIONALITY
+-----------------------
+- Type in the search box to filter games
+- Supports:
+  • Partial names (e.g., "jet" matches "Jet Set Willy")
+  • Multiple terms ("jet set" matches games containing both words)
+  • Case-insensitive matching
+
+5. SETTINGS (Menu → Settings)
+-----------------------------
+Configure folders for:
+- Games: Location of .tzx/.tap files
+- Images: Screenshots (match game names)
+- Manuals: Text files (match game names)
+Options:
+- Remember last played game (checkbox)
+
+6. MENU OPTIONS
+---------------
+[Settings]
+- Configure application folders and options
+
+[Save Duration]
+- Set recording length (15/30/60/90 sec)
+
+[Help]
+- Quick reference guide (this manual)
+
+7. TROUBLESHOOTING
+------------------
+Q: No sound during playback?
+A: Ensure audio cable is connected between the PC/Laptop and ZX Spectrum and in the correct ports.
+
+Q: Save/Load not working?
+A: Check:
+   - Volume is loud enough during save
+   - No background noise during recording
+   - WAV file is in correct format (44.1kHz mono)
+
+Q: Game not appearing in list?
+A: Verify:
+   - File is in the Games folder
+   - Has .tzx or .tap extension
+   - Not corrupted (test in other emulators)
+
+8. FOLDER STRUCTURE
+-------------------
+Recommended setup:
+/Application Root
+  ├── /Games       (.tzx/.tap files)
+  ├── /Images      (Screenshots as .png/.jpg)
+  ├── /Manuals     (Text files as .txt)
+  ├── /Saves       (Auto-created save states)
+  └── Instructions.txt (This file)
+
+9. VERSION NOTES
+-----------------
+- Supports TZX v1.20 specifications
+- Optimal audio levels: 80-90% volume
+- Compatible with most 16K and 48K Spectrum games
