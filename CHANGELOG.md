@@ -1,5 +1,38 @@
 # Changelog
 
+## [1.3.0] - 2025-03-31
+### Added
+- **Save/Load Game Progress System**  
+  - Complete audio save state functionality  
+  - Configurable recording durations (15s/30s/60s/90s)  
+  - Status feedback during save/load operations  
+  - Automatic WAV file management  
+
+- **Help System**  
+  - Integrated help form with formatted instructions  
+  - Section highlighting and improved readability  
+  - Dynamic content loading from Instructions.txt  
+
+- **Menu Improvements**  
+  - Added File → Exit option  
+  - Reorganized menu structure (File, Save Duration, Settings, Help)  
+
+### Changed
+- **Tape Control**  
+  - Reset block counter to 0 on game stop/change  
+  - Improved block tracking accuracy  
+  - Enhanced rewind/fast-forward reliability  
+
+- **Code Quality**  
+  - Process management improvements  
+  - Exception handling for child processes  
+  - Memory leak prevention in image loading  
+  - Status message timeout system  
+
+- **Documentation**  
+  - Updated README with all current features  
+  - Added save/load instructions  
+
 ## [1.2.0] - 2025-03-25
 ### Added
 - **Fast-forward functionality**  
