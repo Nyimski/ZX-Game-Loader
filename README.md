@@ -1,55 +1,108 @@
 # ZX Game Loader
 
-ZX Game Loader is a graphical user interface (GUI) application designed to load ZX Spectrum games onto original hardware. The application features a game list, screenshots, and instruction manuals, all displayed within the GUI. It also includes added features such as pause and rewind, with plans to add fast forward and record features in the future.
+A comprehensive GUI application for loading ZX Spectrum games onto original hardware with advanced tape control and save state functionality.
 
 ## Features
-- **Game List**: Displays a list of available ZX Spectrum games.
-- **Screenshots**: Shows screenshots of the selected game.
-- **Instruction Manuals**: Displays the instruction manual for the selected game.
-- **Pause**: Allows pausing the game playback.
-- **Rewind**: Allows rewinding the game playback.
-- **Fast Forward**: Allows fast-forwarding the game playback.
-- **Instant Search**: Filter games by typing in the search box - no button needed!
-- **Remember Last Game**: When selected returns to last game in list when app is reloaded.
-- **Record**: *(Planned)* Allows recording and saving game progress.
+
+### Core Functionality
+- **Game Browser** with instant search (supports multi-term filtering)
+- **Screenshot Viewer** (supports JPG, PNG, GIF)
+- **Manual Viewer** (TXT format)
+- Supports both **.tzx** and **.tap** game files
+
+### Tape Control
+- ▶️ **Play**: Start game playback
+- ⏸️ **Pause/Resume**: Temporarily halt playback
+- ⏹️ **Stop**: End playback completely
+- ⏪ **Rewind**: Move back 1 tape block
+- ⏩ **Forward**: Jump to next tape block
+- 🔢 **Block Counter**: Shows current playback position
+- 000 **Set Zero**: Mark reference point (e.g., after loading screens)
+
+### Save States
+- 💾 **Save Game Progress**:
+  - Records audio from Spectrum's EAR port
+  - Configurable durations (15s/30s/60s/90s)
+  - Auto-detects signal start/stop
+- 📂 **Load Game Progress**:
+  - Browse and select saved .wav files
+  - Simulates tape loading process
+  - Status feedback during operation
+
+### Recommended Save Durations
+- Most games: 15 seconds
+- Multi-load games (e.g., The Hobbit): 60 seconds
+- Long saves (e.g., Elite): 90 seconds
+
+### Convenience Features
+- **Remember Last Game**: Auto-reopens your last-played game
+- **Customizable Folders**: Set paths for games, images, manuals
+- **Save Duration Presets**: Quick access via menu
 
 ## Requirements
-- **Windows 10** (64-bit) or **Windows 11** (64-bit)
-- **Python** (embedded in the project)
+- **Windows 10/11** (64-bit)
+- **Python** (embedded in distribution)
 
 ## Installation
+1. Download latest release
+2. Extract to preferred location
+3. Run `ZX Game Loader.exe`
 
-1. Extract the archive to a folder of your choice.
+## Usage Guide
 
-## Usage
+### First-Time Setup
+1. Open **Settings** (Menu → Settings)
+2. Configure folders for:
+   - Games (.tzx/.tap files)
+   - Images (screenshots as .jpg/.png/.gif)
+   - Manuals (.txt files)
+3. Enable "Remember Last Game" if desired
 
-1. Run the application (ZX Launcher.exe).
-2. Click "Settings" and add paths to your Games, Instruction Manuals, and Artwork.
-3. Select a game from the list.
-4. Click "Load Game" to start the game playback.
-5. Use the "Pause" button to pause the game and the "Rewind" button to rewind the game playback.
+### Playing Games
+1. Select game from list (use search to filter)
+2. View screenshot and manual
+3. Click **Play** to start
+4. Use **Pause**, **Rewind**, **Forward** as needed
 
-*Note - Artwork and Instruction Manuals must be named exactly the same as your game file.
-For example if your game file is named "1943 - The Battle of Midway (1988)(Go!)[t Pokes].tap" then the Artwork should be named "1943 - The Battle of Midway (1988)(Go!)[t Pokes].jpg" and your Instruction manual "1943 - The Battle of Midway (1988)(Go!)[t Pokes].txt"
+### Saving Progress
+1. During gameplay, click **Save**
+2. Wait for "Waiting for signal..." message
+3. Play audio from Spectrum's EAR port
+4. Application will automatically:
+   - Detect the signal
+   - Record for configured duration
+   - Save as timestamped .wav file
 
-Game files can be .tzx or .tap
-Artwork can be .jpg, .png or .gif
-Instruction manuals must be .txt 
+### Loading Progress
+1. Click **Load**
+2. Select your saved .wav file
+3. App will simulate tape loading
 
-## Acknowledgements
+## File Naming Convention
+All supporting files must match game filename exactly:
+- Game: `GameName.tzx` or `GameName.tap`
+- Image: `GameName.jpg/png/gif`
+- Manual: `GameName.txt`
 
-This project uses a modified version of **tzxplay.py** from **[tzxtools](https://github.com/shred/tzxtools)**, authored by **shred**, which is licensed under the **GNU General Public License v3 (GPLv3)**.
+## Technical Details
+- Uses modified **tzxplay.py** from [tzxtools](https://github.com/shred/tzxtools)
+- Save system works with standard audio cables
+- Optimized for 44.1kHz mono WAV files
+
+## Troubleshooting
+- **No sound during playback?** Check audio cable connections
+- **Save/Load not working?** Ensure:
+  - Adequate volume during save
+  - Minimal background noise
+  - Correct WAV format (44.1kHz mono)
+- **Game missing from list?** Verify:
+  - Correct folder location
+  - Proper file extension (.tzx/.tap)
+  - File integrity
 
 ## License
-
-This project is licensed under the **GNU General Public License v3 (GPLv3)**. See the [LICENSE](./LICENSE) file for more information.
-
-The **tzxplay.py** file is a modified version of the original from **tzxtools**, and it is licensed under the **GPLv3 License**.
+GNU General Public License v3 (GPLv3)
 
 ## Contributing
+Bug reports and feature requests welcome via GitHub Issues.
 
-Contributions are welcome! Please open an issue or submit a pull request with your improvements.
-
-## Contact
-
-For any questions or inquiries, please open an issue on the GitHub repository.
