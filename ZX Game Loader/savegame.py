@@ -8,6 +8,7 @@ import time
 
 # Constants
 save_status_file = os.path.join(os.getenv("TEMP"), "save_status.txt")
+save_control_file = os.path.join(os.getenv("TEMP"), "save_control.txt")
 saves_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Saves")
 
 def clean_filename(name):
@@ -22,8 +23,28 @@ def write_status(message):
     except:
         pass
 
-def record_save(game_name, max_duration=15):
+def check_stop_command():
+    """Check if stop command has been issued"""
     try:
+        if os.path.exists(save_control_file):
+            with open(save_control_file, 'r') as f:
+                return f.read().strip().lower() == "stop"
+        return False
+    except:
+        return False
+
+def clear_control_file():
+    """Clear the control file"""
+    try:
+        if os.path.exists(save_control_file):
+            os.remove(save_control_file)
+    except:
+        pass
+
+def record_save(game_name):
+    try:
+        # Clear any previous control commands
+        clear_control_file()
         write_status("waiting_for_signal")
         
         # Audio settings
@@ -56,7 +77,7 @@ def record_save(game_name, max_duration=15):
                     recording.append(indata.copy())
                 return
             
-            if time.time() - recording_start_time > max_duration:
+            if check_stop_command():
                 raise sd.CallbackStop
             
             recording.append(indata.copy())
@@ -74,7 +95,8 @@ def record_save(game_name, max_duration=15):
         with sd.InputStream(samplerate=sample_rate, channels=1,
                           dtype='int16', callback=callback,
                           blocksize=2048):
-            sd.sleep(max_duration * 1000)
+            while not check_stop_command():
+                time.sleep(0.1)
         
         if not recording:
             write_status("no_signal_detected")
@@ -100,6 +122,8 @@ def record_save(game_name, max_duration=15):
     except Exception as e:
         write_status(f"error:{str(e)}")
         return False
+    finally:
+        clear_control_file()
 
 def play_save(wav_path):
     try:
@@ -128,15 +152,14 @@ def play_save(wav_path):
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: savegame.py <command> <game_name> [wav_file|max_duration]")
+        print("Usage: savegame.py <command> <game_name> [wav_file]")
         return
     
     command = sys.argv[1]
     game_name = sys.argv[2]
     
     if command == "save":
-        max_duration = int(sys.argv[3]) if len(sys.argv) > 3 else 15
-        record_save(game_name, max_duration)
+        record_save(game_name)
     elif command == "load":
         if len(sys.argv) < 4:
             print("Error: Missing WAV file path for load command")
