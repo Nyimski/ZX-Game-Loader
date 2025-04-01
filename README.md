@@ -17,27 +17,20 @@ A comprehensive GUI application for loading ZX Spectrum games onto original hard
 - ⏪ **Rewind**: Move back 1 tape block
 - ⏩ **Forward**: Jump to next tape block
 - 🔢 **Block Counter**: Shows current playback position
-- 000 **Set Zero**: Mark reference point (e.g., after loading screens)
+- 000 **Set 000**: Mark reference point (e.g., after loading screens)
 
 ### Save States
 - 💾 **Save Game Progress**:
   - Records audio from Spectrum's EAR port
-  - Configurable durations (15s/30s/60s/90s)
   - Auto-detects signal start/stop
 - 📂 **Load Game Progress**:
   - Browse and select saved .wav files
   - Simulates tape loading process
   - Status feedback during operation
 
-### Recommended Save Durations
-- Most games: 15 seconds
-- Multi-load games (e.g., The Hobbit): 60 seconds
-- Long saves (e.g., Elite): 90 seconds
-
 ### Convenience Features
 - **Remember Last Game**: Auto-reopens your last-played game
 - **Customizable Folders**: Set paths for games, images, manuals
-- **Save Duration Presets**: Quick access via menu
 
 ## Requirements
 - **Windows 10/11** (64-bit)
@@ -70,7 +63,6 @@ A comprehensive GUI application for loading ZX Spectrum games onto original hard
 3. Play audio from Spectrum's EAR port
 4. Application will automatically:
    - Detect the signal
-   - Record for configured duration
    - Save as timestamped .wav file
 
 ### Loading Progress
