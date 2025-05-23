@@ -9,14 +9,16 @@ ZX Game Loader - Complete User Guide
 
 2. PLAY CONTROLS:
    • PLAY    - Start playback
-   • PAUSE   - Temporarily halt
-   • STOP    - End playback
    • REWIND  - Move back 1 block
-   • FORWARD - Jump next block
+   • FORWARD - Move forward 1 block
+   • STOP    - Halt playback
+   • EJECT   - Completely end playback
 
-3. TAPE NAVIGATION:
+3. TAPE COUNTER:
    - Current Block: Shows playback position
-   - SET 000: Marks reference point (e.g., after loading screens, start of level)
+   - Reset at Block: Reference marker (set via COUNTER RESET)
+   - COUNTER RESET: Marks reference point (e.g., after loading screens, start of level)
+   - JUMP: Jumps to block set by COUNTER RESET
 
  SETTINGS GUIDE
 -----------------
@@ -59,17 +61,19 @@ A tool for loading, playing, and managing ZX Spectrum tape games (.tzx/.tap) wit
 - Use search box to filter (supports multiple terms)
 
 [Buttons]
-• LOAD    - Play selected game (starts tape emulation)
-• PAUSE   - Temporarily halt playback
-• STOP    - Completely stop playback
+• PLAY    - Play selected game (starts tape emulation)
 • REWIND  - Move back 1 tape block
 • FORWARD - Jump to next tape block
-• SET 000 - Mark current block for reference
+• STOP    - Halt playback
+• EJECT   - Completely end playback
+• COUNTER RESET - Marks reference point (e.g., after loading screens, start of level)
+• JUMP    - Jumps to block set by COUNTER RESET
 • SAVE    - Start recording save (changes to STOP during recording)
+• LOAD    - Start loading save
 
 [Tape Status]
 - Current Block: Shows playback position
-- Reset at Block: Reference marker (set via SET 000)
+- Reset at Block: Reference marker (set via COUNTER RESET)
 
 3. SAVE/LOAD STATES (AUDIO)
 ---------------------------

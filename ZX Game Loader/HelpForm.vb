@@ -122,8 +122,8 @@ Public Class HelpForm
 
         ' Format button names and key actions
         Dim actions() As String = {
-            "PLAY", "PAUSE", "STOP", "REWIND", "FORWARD", "SET 000",
-            "SAVE", "LOAD", "SAVE", "STOP", "FORWARD", "SET 000", "Browse", "SAVE STATE", "LOAD STATE"
+            "PLAY", "EJECT", "STOP", "REWIND", "FORWARD", "COUNTER RESET",
+            "SAVE", "LOAD", "SAVE", "STOP", "FORWARD", "Eject", "Browse", "SAVE STATE", "LOAD STATE", "JUMP", "Current Block", "Reset at Block"
         }
 
         For Each action In actions

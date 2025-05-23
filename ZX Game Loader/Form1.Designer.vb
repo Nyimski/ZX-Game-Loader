@@ -26,12 +26,11 @@ Partial Class Form1
         ListBox1 = New ListBox()
         PictureBox1 = New PictureBox()
         RichTextBox1 = New RichTextBox()
-        BtnLoadGame = New Button()
+        BtnPlay = New Button()
         FolderBrowserDialog1 = New FolderBrowserDialog()
-        BtnPause = New Button()
         BtnStop = New Button()
         BtnRewind = New Button()
-        BtnSetZero = New Button()
+        BtnCounterReset = New Button()
         LblTapeCounter = New Label()
         LblZeroedBlock = New Label()
         LblCurrentGame = New Label()
@@ -43,8 +42,14 @@ Partial Class Form1
         BtnLoadState = New Button()
         LblTapeStatus = New Label()
         GroupBox1 = New GroupBox()
+        GroupBox2 = New GroupBox()
+        Jump = New Button()
+        GroupBox3 = New GroupBox()
+        BtnEject = New Button()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         GroupBox1.SuspendLayout()
+        GroupBox2.SuspendLayout()
+        GroupBox3.SuspendLayout()
         SuspendLayout()
         ' 
         ' ListBox1
@@ -72,27 +77,18 @@ Partial Class Form1
         RichTextBox1.TabIndex = 2
         RichTextBox1.Text = ""
         ' 
-        ' BtnLoadGame
+        ' BtnPlay
         ' 
-        BtnLoadGame.Location = New Point(12, 580)
-        BtnLoadGame.Name = "BtnLoadGame"
-        BtnLoadGame.Size = New Size(75, 23)
-        BtnLoadGame.TabIndex = 3
-        BtnLoadGame.Text = "Play"
-        BtnLoadGame.UseVisualStyleBackColor = True
-        ' 
-        ' BtnPause
-        ' 
-        BtnPause.Location = New Point(336, 580)
-        BtnPause.Name = "BtnPause"
-        BtnPause.Size = New Size(75, 23)
-        BtnPause.TabIndex = 5
-        BtnPause.Text = "Pause"
-        BtnPause.UseVisualStyleBackColor = True
+        BtnPlay.Location = New Point(15, 20)
+        BtnPlay.Name = "BtnPlay"
+        BtnPlay.Size = New Size(75, 23)
+        BtnPlay.TabIndex = 3
+        BtnPlay.Text = "Play"
+        BtnPlay.UseVisualStyleBackColor = True
         ' 
         ' BtnStop
         ' 
-        BtnStop.Location = New Point(255, 580)
+        BtnStop.Location = New Point(258, 21)
         BtnStop.Name = "BtnStop"
         BtnStop.Size = New Size(75, 23)
         BtnStop.TabIndex = 6
@@ -101,26 +97,26 @@ Partial Class Form1
         ' 
         ' BtnRewind
         ' 
-        BtnRewind.Location = New Point(93, 580)
+        BtnRewind.Location = New Point(96, 21)
         BtnRewind.Name = "BtnRewind"
         BtnRewind.Size = New Size(75, 23)
         BtnRewind.TabIndex = 7
         BtnRewind.Text = "Rewind"
         BtnRewind.UseVisualStyleBackColor = True
         ' 
-        ' BtnSetZero
+        ' BtnCounterReset
         ' 
-        BtnSetZero.Location = New Point(417, 580)
-        BtnSetZero.Name = "BtnSetZero"
-        BtnSetZero.Size = New Size(75, 23)
-        BtnSetZero.TabIndex = 8
-        BtnSetZero.Text = "Set 000"
-        BtnSetZero.UseVisualStyleBackColor = True
+        BtnCounterReset.Location = New Point(16, 22)
+        BtnCounterReset.Name = "BtnCounterReset"
+        BtnCounterReset.Size = New Size(92, 23)
+        BtnCounterReset.TabIndex = 8
+        BtnCounterReset.Text = "Counter Reset"
+        BtnCounterReset.UseVisualStyleBackColor = True
         ' 
         ' LblTapeCounter
         ' 
         LblTapeCounter.AutoSize = True
-        LblTapeCounter.Location = New Point(522, 584)
+        LblTapeCounter.Location = New Point(114, 26)
         LblTapeCounter.Name = "LblTapeCounter"
         LblTapeCounter.Size = New Size(82, 15)
         LblTapeCounter.TabIndex = 9
@@ -129,7 +125,7 @@ Partial Class Form1
         ' LblZeroedBlock
         ' 
         LblZeroedBlock.AutoSize = True
-        LblZeroedBlock.Location = New Point(648, 584)
+        LblZeroedBlock.Location = New Point(114, 56)
         LblZeroedBlock.Name = "LblZeroedBlock"
         LblZeroedBlock.Size = New Size(83, 15)
         LblZeroedBlock.TabIndex = 11
@@ -170,7 +166,7 @@ Partial Class Form1
         ' 
         ' BtnFastForward
         ' 
-        BtnFastForward.Location = New Point(174, 580)
+        BtnFastForward.Location = New Point(177, 21)
         BtnFastForward.Name = "BtnFastForward"
         BtnFastForward.Size = New Size(75, 23)
         BtnFastForward.TabIndex = 16
@@ -198,7 +194,7 @@ Partial Class Form1
         ' LblTapeStatus
         ' 
         LblTapeStatus.AutoSize = True
-        LblTapeStatus.Location = New Point(6, 57)
+        LblTapeStatus.Location = New Point(6, 56)
         LblTapeStatus.Name = "LblTapeStatus"
         LblTapeStatus.Size = New Size(39, 15)
         LblTapeStatus.TabIndex = 19
@@ -216,23 +212,62 @@ Partial Class Form1
         GroupBox1.TabStop = False
         GroupBox1.Text = "Game Saves"
         ' 
+        ' GroupBox2
+        ' 
+        GroupBox2.Controls.Add(Jump)
+        GroupBox2.Controls.Add(BtnCounterReset)
+        GroupBox2.Controls.Add(LblZeroedBlock)
+        GroupBox2.Controls.Add(LblTapeCounter)
+        GroupBox2.Location = New Point(548, 562)
+        GroupBox2.Name = "GroupBox2"
+        GroupBox2.Size = New Size(222, 83)
+        GroupBox2.TabIndex = 21
+        GroupBox2.TabStop = False
+        GroupBox2.Text = "Tape Counter"
+        ' 
+        ' Jump
+        ' 
+        Jump.Location = New Point(16, 51)
+        Jump.Name = "Jump"
+        Jump.Size = New Size(92, 23)
+        Jump.TabIndex = 12
+        Jump.Text = "Jump"
+        Jump.UseVisualStyleBackColor = True
+        ' 
+        ' GroupBox3
+        ' 
+        GroupBox3.Controls.Add(BtnEject)
+        GroupBox3.Controls.Add(BtnPlay)
+        GroupBox3.Controls.Add(BtnRewind)
+        GroupBox3.Controls.Add(BtnFastForward)
+        GroupBox3.Controls.Add(BtnStop)
+        GroupBox3.Location = New Point(12, 563)
+        GroupBox3.Name = "GroupBox3"
+        GroupBox3.Size = New Size(430, 56)
+        GroupBox3.TabIndex = 22
+        GroupBox3.TabStop = False
+        GroupBox3.Text = "Tape Control"
+        ' 
+        ' BtnEject
+        ' 
+        BtnEject.Location = New Point(339, 20)
+        BtnEject.Name = "BtnEject"
+        BtnEject.Size = New Size(75, 23)
+        BtnEject.TabIndex = 17
+        BtnEject.Text = "Eject"
+        BtnEject.UseVisualStyleBackColor = True
+        ' 
         ' Form1
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(988, 655)
+        Controls.Add(GroupBox3)
+        Controls.Add(GroupBox2)
         Controls.Add(GroupBox1)
-        Controls.Add(BtnFastForward)
         Controls.Add(SearchBox)
         Controls.Add(Label1)
-        Controls.Add(BtnPause)
-        Controls.Add(BtnLoadGame)
         Controls.Add(LblCurrentGame)
-        Controls.Add(BtnStop)
-        Controls.Add(BtnRewind)
-        Controls.Add(LblZeroedBlock)
-        Controls.Add(LblTapeCounter)
-        Controls.Add(BtnSetZero)
         Controls.Add(RichTextBox1)
         Controls.Add(PictureBox1)
         Controls.Add(ListBox1)
@@ -244,6 +279,9 @@ Partial Class Form1
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         GroupBox1.ResumeLayout(False)
         GroupBox1.PerformLayout()
+        GroupBox2.ResumeLayout(False)
+        GroupBox2.PerformLayout()
+        GroupBox3.ResumeLayout(False)
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -251,12 +289,11 @@ Partial Class Form1
     Friend WithEvents ListBox1 As ListBox
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents RichTextBox1 As RichTextBox
-    Friend WithEvents BtnLoadGame As Button
+    Friend WithEvents BtnPlay As Button
     Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
-    Friend WithEvents BtnPause As Button
     Friend WithEvents BtnStop As Button
     Friend WithEvents BtnRewind As Button
-    Friend WithEvents BtnSetZero As Button
+    Friend WithEvents BtnCounterReset As Button
     Friend WithEvents LblTapeCounter As Label
     Friend WithEvents LblZeroedBlock As Label
     Friend WithEvents LblCurrentGame As Label
@@ -268,5 +305,9 @@ Partial Class Form1
     Friend WithEvents BtnLoadState As Button
     Friend WithEvents LblTapeStatus As Label
     Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Jump As Button
+    Friend WithEvents BtnEject As Button
 
 End Class

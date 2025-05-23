@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Diagnostics
 Imports System.Drawing
+Imports System.Threading.Tasks
 
 Public Class Form1
     ' Folder paths and settings
@@ -14,7 +15,6 @@ Public Class Form1
 
     ' Process and playback control
     Private tzxPlayProcess As Process = Nothing
-    Private isPaused As Boolean = False
     Private _childProcesses As New List(Of Process)()
     Private controlFilePath As String = Path.Combine(Path.GetTempPath(), "tzx_control.txt")
     Private totalBlocksFilePath As String = Path.Combine(Path.GetTempPath(), "total_blocks.txt")
@@ -30,6 +30,13 @@ Public Class Form1
     Private WithEvents TimerSaveStatus As New Timer() With {.Interval = 500}
     Private WithEvents TimerResetStatus As New Timer() With {.Interval = 10000, .Enabled = False}
     Private isRecording As Boolean = False
+    Private isStopped As Boolean = False
+
+    ' Scrolling text variables
+    Private WithEvents scrollTimer As New Timer() With {.Interval = 100} ' Lower = faster scrolling
+    Private scrollText As String = ""
+    Private scrollIndex As Integer = 0
+    Private Const DISPLAY_CHARS As Integer = 78
 
     Private Sub ResetBlockLabels()
         LblTapeCounter.Text = "Current Block: 0"
@@ -44,9 +51,33 @@ Public Class Form1
         Else
             ListBox1.Enabled = True
             RunDeleteTempFiles()
-            BtnPause.Text = "Pause"
+            BtnStop.Text = "Stop"
             tapeCounterTimer.Stop()
         End If
+    End Sub
+
+    Private Sub StartScrollingText(text As String)
+        scrollText = text & "    " ' Add gap for readability
+        scrollIndex = 0
+        If scrollText.Length > DISPLAY_CHARS Then
+            scrollTimer.Start()
+        Else
+            scrollTimer.Stop()
+            LblCurrentGame.Text = scrollText
+        End If
+    End Sub
+
+    Private Sub ScrollTimer_Tick(sender As Object, e As EventArgs) Handles scrollTimer.Tick
+        If scrollText.Length <= DISPLAY_CHARS Then
+            LblCurrentGame.Text = scrollText
+            scrollTimer.Stop()
+            Return
+        End If
+
+        Dim loopedText As String = scrollText & scrollText.Substring(0, DISPLAY_CHARS)
+        If scrollIndex + DISPLAY_CHARS > loopedText.Length Then scrollIndex = 0
+        LblCurrentGame.Text = loopedText.Substring(scrollIndex, DISPLAY_CHARS)
+        scrollIndex += 1
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -79,22 +110,19 @@ Public Class Form1
     Private Sub InitializeMenuStrip()
         Dim menuStrip As New MenuStrip()
 
-        ' File Menu
+        ' File menu
         Dim fileMenuItem As New ToolStripMenuItem("File")
-
-        ' Exit option
         Dim exitMenuItem As New ToolStripMenuItem("Exit")
         AddHandler exitMenuItem.Click, Sub(sender, e) Me.Close()
         fileMenuItem.DropDownItems.Add(exitMenuItem)
-
         menuStrip.Items.Add(fileMenuItem)
 
-        ' Settings Menu
+        ' Settings menu
         Dim settingsMenuItem As New ToolStripMenuItem("Settings")
         AddHandler settingsMenuItem.Click, AddressOf OpenSettingsForm
         menuStrip.Items.Add(settingsMenuItem)
 
-        ' Help Menu
+        ' Help menu
         Dim helpMenuItem As New ToolStripMenuItem("Help")
         AddHandler helpMenuItem.Click, AddressOf ShowFormattedHelp
         menuStrip.Items.Add(helpMenuItem)
@@ -185,9 +213,7 @@ Public Class Form1
                             proc.Kill()
                         End If
                     Catch ex As InvalidOperationException
-                        ' Process already exited or not associated
                     Catch ex As NotSupportedException
-                        ' Process is on remote computer
                     Catch ex As Exception
                         Debug.WriteLine($"Error stopping process: {ex.Message}")
                     End Try
@@ -210,9 +236,7 @@ Public Class Form1
                         tzxPlayProcess.Kill()
                     End If
                 Catch ex As InvalidOperationException
-                    ' Process already exited or not associated
                 Catch ex As NotSupportedException
-                    ' Process is on remote computer
                 Catch ex As Exception
                     Debug.WriteLine($"Error stopping tzxPlayProcess: {ex.Message}")
                 End Try
@@ -268,21 +292,28 @@ Public Class Form1
 
         Dim currentGame = If(ListBox1.SelectedItem?.ToString(), "")
 
-        If lines.Count >= 5 Then
-            lines(4) = currentGame
-        Else
-            lines.Add(currentGame)
-        End If
+            If lines.Count >= 5 Then
+                lines(4) = currentGame
+            Else
+                lines.Add(currentGame)
+            End If
 
-        File.WriteAllLines(_settingsFilePath, lines)
+            File.WriteAllLines(_settingsFilePath, lines)
     End Sub
 
     Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
         If ListBox1.SelectedIndex = -1 Then Exit Sub
 
-        ResetBlockLabels()
         Dim selectedGame As String = ListBox1.SelectedItem.ToString()
-        LblCurrentGame.Text = selectedGame
+        StartScrollingText(selectedGame)
+
+
+        ' Start scrolling if needed
+        If selectedGame.Length > DISPLAY_CHARS Then
+            scrollTimer.Start()
+        End If
+
+        ResetBlockLabels()
         RunDeleteTempFiles()
 
         ' Load game image
@@ -315,79 +346,70 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub BtnLoadGame_Click(sender As Object, e As EventArgs) Handles BtnLoadGame.Click
-        If ListBox1.SelectedIndex = -1 Then
-            MessageBox.Show("Please select a game first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
-
-        Dim selectedGame As String = ListBox1.SelectedItem.ToString()
-        Dim gameFile = Directory.GetFiles(GameFolder, selectedGame & ".*", SearchOption.AllDirectories).
-                      FirstOrDefault(Function(f) f.EndsWith(".tzx") Or f.EndsWith(".tap"))
-
-        If gameFile Is Nothing Then
-            MessageBox.Show("Game file not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
-
-        Try
-            If File.Exists(controlFilePath) Then File.Delete(controlFilePath)
-
-            Dim startInfo As New ProcessStartInfo() With {
-                .FileName = Path.Combine(Application.StartupPath, "python", "python.exe"),
-                .Arguments = $"""{Path.Combine(Application.StartupPath, "tzxplay.py")}"" ""{gameFile}""",
-                .UseShellExecute = False,
-                .CreateNoWindow = True,
-                .RedirectStandardError = True,
-                .RedirectStandardOutput = True
-            }
-
-            tzxPlayProcess = Process.Start(startInfo)
-            _childProcesses.Add(tzxPlayProcess)
-
-            AddHandler tzxPlayProcess.ErrorDataReceived, Sub(s, args)
-                                                             If Not String.IsNullOrEmpty(args.Data) Then
-                                                                 Debug.WriteLine("Python Error: " & args.Data)
-                                                             End If
-                                                         End Sub
-
-            AddHandler tzxPlayProcess.OutputDataReceived, Sub(s, args)
-                                                              If Not String.IsNullOrEmpty(args.Data) Then
-                                                                  Debug.WriteLine("Python Output: " & args.Data)
-                                                              End If
-                                                          End Sub
-
-            tzxPlayProcess.BeginErrorReadLine()
-            tzxPlayProcess.BeginOutputReadLine()
-
-            ListBox1.Enabled = False
-            tapeCounter = 0
-            tapeCounterTimer.Start()
-            totalBlocks = GetTotalBlocks()
-            isPaused = False
-            BtnPause.Text = "Pause"
-            zeroedBlock = 0
-            LblZeroedBlock.Text = "Reset at Block 0"
-        Catch ex As Exception
-            MessageBox.Show($"Failed to start Python script: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        End Try
-    End Sub
-
-    Private Sub BtnPause_Click(sender As Object, e As EventArgs) Handles BtnPause.Click
+    Private Sub BtnPlay_Click(sender As Object, e As EventArgs) Handles BtnPlay.Click
         If tzxPlayProcess Is Nothing OrElse tzxPlayProcess.HasExited Then
-            MessageBox.Show("No game is currently playing.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-            Return
-        End If
+            If ListBox1.SelectedIndex = -1 Then
+                MessageBox.Show("Please select a game first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Return
+            End If
 
-        Dim command As String = If(isPaused, "resume", "pause")
-        File.WriteAllText(controlFilePath, command)
-        isPaused = Not isPaused
-        BtnPause.Text = If(isPaused, "Resume", "Pause")
+            Dim selectedGame As String = ListBox1.SelectedItem.ToString()
+            Dim gameFile = Directory.GetFiles(GameFolder, selectedGame & ".*", SearchOption.AllDirectories).
+                         FirstOrDefault(Function(f) f.EndsWith(".tzx") Or f.EndsWith(".tap"))
 
-        If isPaused Then
-            tapeCounterTimer.Stop()
+            If gameFile Is Nothing Then
+                MessageBox.Show("Game file not found!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Return
+            End If
+
+            Try
+                If File.Exists(controlFilePath) Then File.Delete(controlFilePath)
+
+                Dim startInfo As New ProcessStartInfo() With {
+                    .FileName = Path.Combine(Application.StartupPath, "python", "python.exe"),
+                    .Arguments = $"""{Path.Combine(Application.StartupPath, "tzxplay.py")}"" ""{gameFile}""",
+                    .UseShellExecute = False,
+                    .CreateNoWindow = True,
+                    .RedirectStandardError = True,
+                    .RedirectStandardOutput = True
+                }
+
+                tzxPlayProcess = Process.Start(startInfo)
+                _childProcesses.Add(tzxPlayProcess)
+
+                AddHandler tzxPlayProcess.ErrorDataReceived, Sub(s, args)
+                                                                 If Not String.IsNullOrEmpty(args.Data) Then
+                                                                     Debug.WriteLine("Python Error: " & args.Data)
+                                                                 End If
+                                                             End Sub
+
+                AddHandler tzxPlayProcess.OutputDataReceived, Sub(s, args)
+                                                                  If Not String.IsNullOrEmpty(args.Data) Then
+                                                                      Debug.WriteLine("Python Output: " & args.Data)
+                                                                  End If
+                                                              End Sub
+
+                tzxPlayProcess.BeginErrorReadLine()
+                tzxPlayProcess.BeginOutputReadLine()
+
+                ListBox1.Enabled = False
+                tapeCounter = 0
+                tapeCounterTimer.Start()
+                totalBlocks = GetTotalBlocks()
+                isStopped = False
+                BtnStop.Text = "Stop"
+                zeroedBlock = 0
+                LblZeroedBlock.Text = "Reset at Block: 0"
+            Catch ex As Exception
+                MessageBox.Show($"Failed to start Python script: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
         Else
-            tapeCounterTimer.Start()
+            If isStopped Then
+                File.WriteAllText(controlFilePath, "resume")
+                isStopped = False
+                BtnStop.Text = "Stop"
+                tapeCounterTimer.Start()
+            End If
         End If
     End Sub
 
@@ -397,33 +419,22 @@ Public Class Form1
             Return
         End If
 
-        File.WriteAllText(controlFilePath, "stop")
-        Try
-            If Not tzxPlayProcess.HasExited Then
-                tzxPlayProcess.Kill()
-            End If
-        Catch ex As Exception
-            Debug.WriteLine($"Error stopping process: {ex.Message}")
-        Finally
-            tzxPlayProcess?.Dispose()
-            tzxPlayProcess = Nothing
-            If _childProcesses.Contains(tzxPlayProcess) Then
-                _childProcesses.Remove(tzxPlayProcess)
-            End If
-        End Try
-
-        isPaused = False
-        BtnPause.Text = "Pause"
-        ListBox1.Enabled = True
+        File.WriteAllText(controlFilePath, "pause")
+        isStopped = True
         tapeCounterTimer.Stop()
-        ResetBlockLabels()
     End Sub
 
-    Private Sub BtnRewind_Click(sender As Object, e As EventArgs) Handles BtnRewind.Click
+    Private Async Sub BtnRewind_Click(sender As Object, e As EventArgs) Handles BtnRewind.Click
         If tzxPlayProcess Is Nothing OrElse tzxPlayProcess.HasExited Then
             MessageBox.Show("No game is currently playing.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
+
+        File.WriteAllText(controlFilePath, "pause")
+        isStopped = True
+        tapeCounterTimer.Stop()
+
+        Await Task.Delay(100)
 
         Dim currentBlock As Integer = GetCurrentBlock()
         currentBlock = Math.Max(0, currentBlock - 1)
@@ -431,11 +442,17 @@ Public Class Form1
         LblTapeCounter.Text = $"Current Block: {currentBlock}"
     End Sub
 
-    Private Sub BtnFastForward_Click(sender As Object, e As EventArgs) Handles BtnFastForward.Click
+    Private Async Sub BtnFastForward_Click(sender As Object, e As EventArgs) Handles BtnFastForward.Click
         If tzxPlayProcess Is Nothing OrElse tzxPlayProcess.HasExited Then
             MessageBox.Show("No game is currently playing.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
         End If
+
+        File.WriteAllText(controlFilePath, "pause")
+        isStopped = True
+        tapeCounterTimer.Stop()
+
+        Await Task.Delay(100)
 
         If File.Exists(nextBlockFilePath) Then
             Try
@@ -448,9 +465,50 @@ Public Class Form1
         End If
     End Sub
 
-    Private Sub BtnSetZero_Click(sender As Object, e As EventArgs) Handles BtnSetZero.Click
+    Private Sub BtnEject_Click(sender As Object, e As EventArgs) Handles BtnEject.Click
+        ' Stop playback if running
+        If tzxPlayProcess IsNot Nothing AndAlso Not tzxPlayProcess.HasExited Then
+            File.WriteAllText(controlFilePath, "stop")
+            Try
+                If Not tzxPlayProcess.HasExited Then
+                    tzxPlayProcess.Kill()
+                End If
+            Catch ex As Exception
+                Debug.WriteLine($"Error stopping process: {ex.Message}")
+            Finally
+                tzxPlayProcess?.Dispose()
+                tzxPlayProcess = Nothing
+                If _childProcesses.Contains(tzxPlayProcess) Then
+                    _childProcesses.Remove(tzxPlayProcess)
+                End If
+            End Try
+        End If
+
+        isStopped = False
+        ListBox1.Enabled = True
+        tapeCounterTimer.Stop()
+        ResetBlockLabels()
+        RunDeleteTempFiles()
+
+    End Sub
+
+    Private Sub BtnCounterReset_Click(sender As Object, e As EventArgs) Handles BtnCounterReset.Click
         zeroedBlock = GetCurrentBlock()
-        LblZeroedBlock.Text = $"Reset at Block {zeroedBlock}"
+        LblZeroedBlock.Text = $"Reset at Block: {zeroedBlock}"
+    End Sub
+
+    Private Sub Jump_Click(sender As Object, e As EventArgs) Handles Jump.Click
+        If tzxPlayProcess Is Nothing OrElse tzxPlayProcess.HasExited Then
+            MessageBox.Show("No game is currently playing.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
+
+        If zeroedBlock > 0 Then
+            File.WriteAllText(controlFilePath, $"jump:{zeroedBlock}")
+            LblTapeCounter.Text = $"Current Block: {zeroedBlock}"
+        Else
+            MessageBox.Show("No reset block position set. Use Counter Reset first.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
     End Sub
 
     Private Sub BtnSaveState_Click(sender As Object, e As EventArgs) Handles BtnSaveState.Click
@@ -460,14 +518,12 @@ Public Class Form1
         End If
 
         If isRecording Then
-            ' Stop recording
             File.WriteAllText(saveControlFile, "stop")
             isRecording = False
             BtnSaveState.Text = "Save"
             Return
         End If
 
-        ' Start recording
         Dim selectedGame = ListBox1.SelectedItem.ToString()
         LblTapeStatus.Text = "Preparing to save game..."
         Application.DoEvents()
@@ -501,7 +557,7 @@ Public Class Form1
                                                            End If
                                                        End Sub
 
-            LblTapeStatus.Text = "Waiting for signal from Spectrum..."
+            LblTapeStatus.Text = "Waiting for signal..."
             TimerSaveStatus.Start()
             isRecording = True
             BtnSaveState.Text = "Stop"
@@ -607,7 +663,7 @@ Public Class Form1
                           Else
                               Select Case status
                                   Case "waiting_for_signal"
-                                      LblTapeStatus.Text = "Waiting for signal from Spectrum..."
+                                      LblTapeStatus.Text = "Waiting for signal..."
                                   Case "signal_detected"
                                       LblTapeStatus.Text = "Signal detected..."
                                   Case "recording"

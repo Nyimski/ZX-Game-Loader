@@ -9,14 +9,16 @@ ZX Game Loader - Complete User Guide
 
 2. PLAY CONTROLS:
    • PLAY    - Start playback
-   • PAUSE   - Temporarily halt
-   • STOP    - End playback
    • REWIND  - Move back 1 block
-   • FORWARD - Jump next block
+   • FORWARD - Move forward 1 block
+   • STOP    - Halt playback
+   • EJECT   - Completely end playback
 
-3. TAPE NAVIGATION:
+3. TAPE COUNTER:
    - Current Block: Shows playback position
-   - SET 000: Marks reference point (e.g., after loading screens, start of level)
+   - Reset at Block: Reference marker (set via COUNTER RESET)
+   - COUNTER RESET: Marks reference point (e.g., after loading screens, start of level)
+   - JUMP: Jumps to block set by COUNTER RESET
 
  SETTINGS GUIDE
 -----------------
@@ -33,23 +35,14 @@ OPTIONS:
  SAVE/LOAD STATES (AUDIO)
 ---------------------------
 SAVING:
-1. During gameplay, click SAVE STATE
-2. Wait for "Waiting for signal..."
+1. During gameplay, click SAVE (button will change to "STOP")
+2. Wait for "Waiting for signal..." message
 3. Play audio from Spectrum's EAR port
-4. App auto-records (default: 15s)
+4. Click STOP when finished recording
 
 LOADING:
-1. Click LOAD STATE
+1. Click LOAD
 2. Select a .wav file from the game's save folder
-
-RECOMMENDED DURATIONS:
-| Game Type          | Duration |
-|--------------------|----------|
-| Most games         | 15s      |
-| Multi-load         | 60s      |
-| (e.g., The Hobbit) |          |
-| Long saves         | 90s      |
-| (e.g., Elite)      |          |
 
 1. APPLICATION OVERVIEW
 -----------------------
@@ -68,28 +61,32 @@ A tool for loading, playing, and managing ZX Spectrum tape games (.tzx/.tap) wit
 - Use search box to filter (supports multiple terms)
 
 [Buttons]
-• LOAD    - Play selected game (starts tape emulation)
-• PAUSE   - Temporarily halt playback
-• STOP    - Completely stop playback
+• PLAY    - Play selected game (starts tape emulation)
 • REWIND  - Move back 1 tape block
-• FORWARD    - Jump to next tape block
-• SET 000 - Mark current block for reference
+• FORWARD - Jump to next tape block
+• STOP    - Halt playback
+• EJECT   - Completely end playback
+• COUNTER RESET - Marks reference point (e.g., after loading screens, start of level)
+• JUMP    - Jumps to block set by COUNTER RESET
+• SAVE    - Start recording save (changes to STOP during recording)
+• LOAD    - Start loading save
 
 [Tape Status]
 - Current Block: Shows playback position
-- Reset at Block: Reference marker (set via SET 000)
+- Reset at Block: Reference marker (set via COUNTER RESET)
 
 3. SAVE/LOAD STATES (AUDIO)
 ---------------------------
 [SAVE STATE]
-1. Click during gameplay
+1. Click SAVE button during gameplay (button changes to STOP)
 2. Wait for "Waiting for signal" message
 3. Play audio from Spectrum (EAR port)
-4. App will auto-detect and record (15-90 sec)
+4. Click STOP when recording is complete
 
 [LOAD STATE]
-1. Click and select a saved .wav file
-2. Playback will simulate tape loading
+1. Click LOAD button
+2. Select a saved .wav file
+3. Playback will simulate tape loading
 
 4. SEARCH FUNCTIONALITY
 -----------------------
@@ -112,9 +109,6 @@ Options:
 ---------------
 [Settings]
 - Configure application folders and options
-
-[Save Duration]
-- Set recording length (15/30/60/90 sec)
 
 [Help]
 - Quick reference guide (this manual)
@@ -151,3 +145,4 @@ Recommended setup:
 - Supports TZX v1.20 specifications
 - Optimal audio levels: 80-90% volume
 - Compatible with most 16K and 48K Spectrum games
+- Manual save control (press STOP when recording complete)

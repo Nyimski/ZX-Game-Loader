@@ -16,6 +16,7 @@
     <None Remove="Instructions.txt" />
     <None Remove="savegame.py" />
     <None Remove="tzxplay.py" />
+    <None Remove="tzxwav.py" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,9 @@
     </Content>
     <Content Include="tzxplay.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="tzxwav.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
