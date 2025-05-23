@@ -41,7 +41,7 @@ A comprehensive GUI application for loading ZX Spectrum games onto original hard
 1. Download latest release
 2. Extract to preferred location
 3. Run `ZX Game Loader.exe`
-4. Optional - Download Assets.zip (Contains Screenshots and Manuals - Rename your tzx/tap files to match)
+4. Optional - Download 'Assets.zip' (Contains Screenshots and Manuals - Rename your tzx/tap files to match)
 
 ## Usage Guide
 
