@@ -11,13 +11,14 @@ A comprehensive GUI application for loading ZX Spectrum games onto original hard
 - Supports both **.tzx** and **.tap** game files
 
 ### Tape Control
-- ▶️ **Play**: Start game playback
-- ⏸️ **Pause/Resume**: Temporarily halt playback
-- ⏹️ **Stop**: End playback completely
+- ▶️ **Play**: Start/Resume game playback
+- ⏹️ **Stop**: Halt playback
+- ⏏️ **Eject**: Completely end playback
 - ⏪ **Rewind**: Move back 1 tape block
 - ⏩ **Forward**: Jump to next tape block
 - 🔢 **Block Counter**: Shows current playback position
-- 000 **Set 000**: Mark reference point (e.g., after loading screens)
+- 0️⃣ **Counter Reset**: Mark reference point (e.g., after loading screens)
+- ↪️ **Jump**: Jumps to block set by Counter Reset
 
 ### Save States
 - 💾 **Save Game Progress**:
@@ -54,8 +55,8 @@ A comprehensive GUI application for loading ZX Spectrum games onto original hard
 ### Playing Games
 1. Select game from list (use search to filter)
 2. View screenshot and manual
-3. Click **Play** to start
-4. Use **Pause**, **Rewind**, **Forward** as needed
+3. Click **Play** to start or resume playback (after Rewind/Forward/Stop)
+4. Use **Stop**, **Rewind**, **Forward** as needed
 
 ### Saving Progress
 1. During gameplay, click **Save**
