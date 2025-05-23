@@ -18,10 +18,6 @@
 - Renamed "Set 000" to clearer "Counter Reset" label
 - Updated all control descriptions and tooltips
 
-### Technical Improvements
-- Namespace standardized to `Acorn_Game_Loader`
-- `UEFPLAY.PY` timing precision improved (0x0116 exact values fix cumulative drift)
-
 
 ## [1.3.1] - 2025-04-01
 ### Changed
