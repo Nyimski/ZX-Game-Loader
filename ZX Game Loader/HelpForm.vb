@@ -89,10 +89,11 @@ Public Class HelpForm
 
         ' Format section headers
         Dim sections() As String = {
-            "HOW TO USE (QUICK START)", "SETTINGS GUIDE", "SAVE/LOAD STATES (AUDIO)",
-            "APPLICATION OVERVIEW", "MAIN INTERFACE CONTROLS", "TROUBLESHOOTING",
-            "FOLDER STRUCTURE", "VERSION NOTES", "SEARCH FUNCTIONALITY",
-            "SETTINGS (Menu → Settings)", "MENU OPTIONS"
+           "HOW TO USE (QUICK START)", "SETTINGS GUIDE", "SAVE/LOAD STATES (AUDIO)", "[Tape Status]", "[Settings]",
+"[Help]",
+            "APPLICATION OVERVIEW", "MAIN INTERFACE CONTROLS", "TROUBLESHOOTING", "PLAY CONTROLS", "[Buttons]",
+            "FOLDER STRUCTURE", "VERSION NOTES", "SEARCH FUNCTIONALITY", "SAVING:", "LOADING:", "[Game List]",
+            "SETTINGS (Menu → Settings)", "MENU OPTIONS", "TAPE COUNTER", "CONTENT", "SELECT A GAME", "OPTIONS", "[File]", "[Edit Mode]", "[About]"
         }
 
         For Each section In sections
