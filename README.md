@@ -30,6 +30,9 @@ A comprehensive GUI application for loading ZX Spectrum games onto original hard
   - Simulates tape loading process
   - Status feedback during operation
 
+### Convenience Features
+- **Remember Last Game**: Auto-reopens your last-played game
+- **Customizable Folders**: Set paths for games, images, manuals
 - **New in v1.5.0**: Drag-and-drop support for adding games/images/manuals
 - **New in v1.5.0**: Right-click context menu for game management
 - **New in v1.5.0**: Updated in-app manual with Edit Mode documentation
