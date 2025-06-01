@@ -113,7 +113,7 @@ All supporting files must match game filename exactly:
 - **Edit Mode features not appearing?** Ensure:
   - Edit Mode is enabled (Menu → Edit → Editor On)
   - You're right-clicking on a game in the list
-  - 
+  
 ## License
 GNU General Public License v3 (GPLv3)
 
