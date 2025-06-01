@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.5.0 - 2025-06-01
+
+### Added
+- Comprehensive Edit Mode system with toggle
+- Context menu for game management (rename/move/delete)
+- Drag-and-drop support for games/images/manuals
+- About dialog with version/license/contact info
+- Updated in-app manual
+
+### Improved
+- File operation safety and error handling
+- Resource management
+- Process handling
+- Removed DeleteTempFiles.bat; temporary file cleanup is now handled directly by Form1.vb.
+
 ## [v1.4.0] - 2025-05-22
 
 ### Control Scheme Changes
